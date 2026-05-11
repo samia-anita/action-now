@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Action Now — Find what you can do today</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:     #0d1117;
+      --navy2:    #141c26;
+      --navy3:    #1c2a3a;
+      --charcoal: #232d3a;
+      --slate:    #2e3d50;
+      --white:    #f0f4f8;
+      --white2:   #c8d4e0;
+      --muted:    #7a8fa6;
+      --green:    #4caf82;
+      --green2:   #3d9970;
+      --green3:   rgba(76,175,130,0.12);
+      --teal:     #5bc4b8;
+      --border:   rgba(255,255,255,0.07);
+      --border2:  rgba(255,255,255,0.12);
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(13,17,23,0.3)  0%,
+          rgba(13,17,23,0.15) 30%,
+          rgba(13,17,23,0.6)  65%,
+          rgba(13,17,23,0.92) 100%
+        );
+    }
+
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 50%, rgba(13,17,23,0.5) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 2.5rem 5.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--green);
+      opacity: 0.6;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.08;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 1s 0.35s ease both;
+    }
+    .hero h1 em { font-style: italic; color: var(--green); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--white2);
+      max-width: 460px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 1s 0.5s ease both;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 1rem 2.2rem;
+      background: var(--green);
+      color: var(--navy);
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 100px;
+      transition: all 0.25s;
+      animation: fadeUp 1s 0.65s ease both;
+    }
+    .hero-cta:hover {
+      background: var(--teal);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(76,175,130,0.3);
+    }
+    .hero-cta span { transition: transform 0.2s; }
+    .hero-cta:hover span { transform: translateX(4px); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem; right: 2.5rem;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: bob 2.5s ease-in-out infinite;
+    }
+    .scroll-hint::after {
+      content: '';
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+    }
+    @keyframes bob {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* ── SHARED ────────────────────────────────────────── */
+    .section-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      width: 22px; height: 1px;
+      background: var(--green);
+      opacity: 0.6;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.9rem, 4.5vw, 3rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    h2 em { font-style: italic; color: var(--green); }
+
+    .lead {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.85;
+    }
+    .lead strong { color: var(--white2); font-weight: 400; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* ── PROBLEM ───────────────────────────────────────── */
+    .problem-quote {
+      font-family: var(--serif);
+      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white2);
+      line-height: 1.55;
+      max-width: 660px;
+      padding: 1.5rem 0 1.5rem 1.75rem;
+      border-left: 2px solid var(--green);
+      margin: 2.5rem 0;
+      opacity: 0.85;
+    }
+
+    /* ── STEPS ─────────────────────────────────────────── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 3rem;
+    }
+
+    .step {
+      background: var(--navy2);
+      padding: 2rem 1.5rem;
+      transition: background 0.3s;
+      position: relative;
+    }
+    .step:hover { background: var(--navy3); }
+    .step::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 1.5rem; right: 1.5rem;
+      height: 2px;
+      background: linear-gradient(to right, var(--green), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .step:hover::after { opacity: 1; }
+
+    .step-num {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--border2);
+      display: block;
+      line-height: 1;
+      margin-bottom: 1.25rem;
+    }
+    .step h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .step p {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── ISSUES ────────────────────────────────────────── */
+    .issues-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 2.5rem;
+    }
+
+    .issue-chip {
+      padding: 0.5rem 1.1rem;
+      border: 1px solid var(--border2);
+      border-radius: 100px;
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--white2);
+      background: rgba(255,255,255,0.03);
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .issue-chip:hover {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green3);
+      transform: translateY(-2px);
+    }
+
+    /* ── SAMPLE ────────────────────────────────────────── */
+    .sample-section {
+      background: var(--navy2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sample-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .sample-card {
+      background: var(--navy3);
+      border: 1px solid var(--border2);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .sample-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .sc-green::before { background: var(--green); }
+    .sc-teal::before  { background: var(--teal); }
+    .sc-gold::before  { background: #e0b060; }
+    .sample-card:hover { transform: translateY(-3px); }
+    .sample-card:hover::before { opacity: 1; }
+
+    .sample-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    .sb-green { background: rgba(76,175,130,0.15); color: #6ddfa8; }
+    .sb-teal  { background: rgba(91,196,184,0.15); color: #7fe0d8; }
+    .sb-gold  { background: rgba(224,176,96,0.15); color: #e8c070; }
+
+    .sample-card h4 {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+      line-height: 1.35;
+    }
+    .sample-card p {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+    .sample-effort {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ── DIFF ──────────────────────────────────────────── */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem 3rem;
+      margin-top: 3rem;
+    }
+
+    .diff-item {
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .diff-item:hover { border-top-color: var(--green); }
+    .diff-item h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .diff-item p {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ── FINAL CTA ─────────────────────────────────────── */
+    .final-cta {
+      text-align: center;
+      padding: 7rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(76,175,130,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .final-inner { max-width: 560px; margin: 0 auto; position: relative; }
+    .final-cta h2 { font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 1rem; }
+    .final-cta p { color: var(--muted); font-weight: 300; margin-bottom: 2.5rem; }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 1.1rem 2.5rem;
+      background: var(--green);
+      color: var(--navy);
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 100px;
+      transition: all 0.25s;
+    }
+    .cta-btn:hover {
+      background: var(--teal);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(76,175,130,0.25);
+    }
+
+    /* ── FOOTER ────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .footer-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--white2);
+    }
+    .footer-links { display: flex; gap: 1.75rem; }
+    .footer-links a {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--green); }
+    .footer-badge { font-size: 0.72rem; color: rgba(255,255,255,0.2); }
+
+    /* ── REVEAL ────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .hero-content { padding: 0 1.5rem 4rem; }
+      .section-wrap { padding: 4rem 1.5rem; }
+      .steps { grid-template-columns: 1fr; }
+      .diff-grid { grid-template-columns: 1fr; }
+      .final-cta { padding: 5rem 1.5rem; }
+      footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
+      .scroll-hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <video class="hero-bg" autoplay muted loop playsinline>
+      <source src="backgrounds/bg.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-vignette"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Action Now</p>
+      <h1>Turn concern<br>into <em>action.</em></h1>
+      <p class="hero-sub">
+        Discover ways to make an impact locally, tailored to you.
+      </p>
+      <a href="app.html" class="hero-cta">
+        Find my actions <span>→</span>
+      </a>
+    </div>
+
+    <div class="scroll-hint">scroll</div>
+  </div>
+
+  <hr class="divider" />
+  <div class="section-wrap reveal">
+    <div class="section-label">The problem</div>
+    <h2>Most people want to help.<br><em>Nobody knows how to start.</em></h2>
+    <blockquote class="problem-quote">
+      "Reduce your footprint." "Volunteer more." "Sign the petition."<br>
+      We've all heard it. None of it tells you how or what to do <em>today.</em>
+    </blockquote>
+    <p class="lead">
+      Action Now utilizes AI to help you take the next step — finding <strong>specific, local, real</strong> opportunities matched to your time, your skills, and the issue you care about.
+    </p>
+  </div>
+
+  <hr class="divider" />
+  <div class="section-wrap reveal">
+    <div class="section-label">How it works</div>
+    <h2>Three inputs.<br><em>Three real actions.</em></h2>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <h3>Pick your cause</h3>
+        <p>Choose what matters most to you. From climate and food insecurity to social justice and mental health.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <h3>Pick your availability</h3>
+        <p>15 minutes or perhaps a whole weekend. The action is matched to what time you have available right now.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <h3>Get real actions</h3>
+        <p>Get live searches for local events, real organisations, and specific next steps.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+  <div class="section-wrap reveal">
+    <div class="section-label">What is covered so far</div>
+    <h2>Your cause<br><em>is here.</em></h2>
+    <div class="issues-grid">
+      <span class="issue-chip">🌱 Climate & environment</span>
+      <span class="issue-chip">🥗 Food insecurity</span>
+      <span class="issue-chip">🏠 Housing & homelessness</span>
+      <span class="issue-chip">🚺 Gender-based violence</span>
+      <span class="issue-chip">🧠 Mental health</span>
+      <span class="issue-chip">✊ Social justice</span>
+      <span class="issue-chip">📚 Education access</span>
+      <span class="issue-chip">🐾 Animal welfare</span>
+    </div>
+  </div>
+
+  <div class="sample-section">
+    <div class="section-wrap reveal">
+      <div class="section-label">What you get</div>
+      <h2>Start Local.<br><em>Create Impact.</em></h2>
+      <p class="lead">Here's what a result looks like for someone in Toronto who cares about food insecurity and has one hour.</p>
+      <div class="sample-cards">
+        <div class="sample-card sc-green">
+          <span class="sample-badge sb-green">✦ Do it today</span>
+          <h4>Volunteer at the Daily Bread Food Bank</h4>
+          <p>Daily Bread has same-week volunteer slots open for sorting and distribution. No experience needed — just show up.</p>
+          <span class="sample-effort">⏱ 1 hour</span>
+        </div>
+        <div class="sample-card sc-teal">
+          <span class="sample-badge sb-teal">✉ Contact someone</span>
+          <h4>Email your city councillor about the breakfast program cut</h4>
+          <p>Toronto City Council votes on school nutrition funding next week. A short email from a constituent takes 10 minutes and gets noticed.</p>
+          <span class="sample-effort">⏱ 15 min</span>
+        </div>
+        <div class="sample-card sc-gold">
+          <span class="sample-badge sb-gold">◎ Learn something</span>
+          <h4>Understand how food banks are actually funded</h4>
+          <p>Most people don't know 60% of food bank supply comes from food drives, not government. This explains where the real gaps are.</p>
+          <span class="sample-effort">⏱ 10 min read</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section-wrap reveal">
+    <div class="section-label">Why it works</div>
+
+    <h2>Local action.<br><em>Built around you.</em></h2>
+
+    <div class="diff-grid">
+      <div class="diff-item">
+        <h3>Live results</h3>
+        <p>Events, volunteer opportunities, petitions, meetings, and local organizations pulled in live as you search.</p>
+      </div>
+
+      <div class="diff-item">
+        <h3>Personalized</h3>
+        <p>Results adapt to your location, interests, availability, and how involved you want to be.</p>
+      </div>
+
+      <div class="diff-item">
+        <h3>No agenda</h3>
+        <p>Choose what matters to you. The platform helps you find ways to take action locally.</p>
+      </div>
+
+      <div class="diff-item">
+        <h3>Free and open</h3>
+        <p>No account or sign-up required. Just search and start exploring ways to get involved.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+  <div class="final-cta reveal">
+    <div class="final-inner">
+      <h2><em>Ready to do something?</em></h2>
+      <p>It takes less than a minute to find your next action.</p>
+      <a href="app.html" class="cta-btn">Find what I can do →</a>
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-name">Action Now</span>
+    <div class="footer-links">
+      <a href="app.html">Launch app</a>
+      <a href="https://github.com/samia-anita/action-now" target="_blank">GitHub</a>
+    </div>
+    <span class="footer-badge">Built for Girls in STEM Hackathon 2026</span>
+  </footer>
+
+  <script>
+    const video = document.querySelector('.hero-bg');
+    if (video) video.playbackRate = 0.6;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

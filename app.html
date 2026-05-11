@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Action Now</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- FORM SCREEN -->
+  <main id="form-screen" class="screen active">
+    <div class="hero">
+      <p class="eyebrow">Action Now</p>
+      <h1>What can I do<br><em>right now?</em></h1>
+      <p class="subtitle">Tell us where you are and what you care about.<br>There is a lot of real opportunities you can take. Today.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="field">
+        <label for="location">Where are you?</label>
+        <input type="text" id="location" placeholder="e.g. Toronto, ON or Chicago, IL" autocomplete="off" />
+      </div>
+
+      <div class="field">
+        <label>What issue do you care about?</label>
+        <div class="tag-group" id="issue-tags">
+          <button class="tag" data-value="climate & environment">Climate & environment</button>
+          <button class="tag" data-value="food insecurity">Food insecurity</button>
+          <button class="tag" data-value="housing & homelessness">Housing & homelessness</button>
+          <button class="tag" data-value="mental health">Mental health</button>
+          <button class="tag" data-value="gender-based violence">Gender-based violence</button>
+          <button class="tag" data-value="social justice">Social justice</button>
+          <button class="tag" data-value="education access">Education access</button>
+          <button class="tag" data-value="animal welfare">Animal welfare</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>What can you offer? <span class="label-hint">(pick any)</span></label>
+        <div class="tag-group" id="skill-tags">
+          <button class="tag" data-value="I can drive">Can drive</button>
+          <button class="tag" data-value="I can write or design">Write / design</button>
+          <button class="tag" data-value="I speak another language">Speak another language</button>
+          <button class="tag" data-value="I can code">Can code</button>
+          <button class="tag" data-value="I can cook or bake">Cook / bake</button>
+          <button class="tag" data-value="I can do physical labour">Physical labour</button>
+          <button class="tag" data-value="I can listen and support people">Listen & support</button>
+          <button class="tag" data-value="I have no specific skills but I want to help">Just want to help</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>How much time do you have?</label>
+        <div class="time-group" id="time-buttons">
+          <button class="time-btn" data-value="15 minutes">15 min</button>
+          <button class="time-btn" data-value="about 1 hour">1 hour</button>
+          <button class="time-btn" data-value="a few hours this weekend">This weekend</button>
+          <button class="time-btn" data-value="ongoing commitment">Ongoing</button>
+        </div>
+      </div>
+
+      <button id="submit-btn" class="submit-btn" disabled>
+        Show me what I can do
+        <span class="btn-arrow">→</span>
+      </button>
+      <p class="form-note">wip.</p>
+    </div>
+  </main>
+
+  <!-- LOADING SCREEN -->
+  <main id="loading-screen" class="screen">
+    <div class="loading-inner">
+      <div class="spinner"></div>
+      <p class="loading-text" id="loading-text">Searching for opportunities near you...</p>
+    </div>
+  </main>
+
+  <!-- RESULTS SCREEN -->
+  <main id="results-screen" class="screen">
+    <div class="results-header">
+      <button class="back-btn" id="back-btn">← Start over</button>
+      <h2>Here's what you can do</h2>
+      <p class="results-sub" id="results-context"></p>
+    </div>
+    <div class="cards-grid" id="cards-grid"></div>
+    <div class="results-footer">
+      <p>Not what you were looking for?</p>
+      <button class="secondary-btn" id="retry-btn">Try different options</button>
+    </div>
+  </main>
+
+  <!-- ERROR SCREEN -->
+  <main id="error-screen" class="screen">
+    <div class="error-inner">
+      <p class="error-icon">⚠</p>
+      <h2>Something went wrong</h2>
+      <p id="error-msg">We couldn't get results. Check your connection and try again.</p>
+      <button class="submit-btn" id="error-back-btn">Try again</button>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
