@@ -2,13 +2,13 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:       #f5f0e8;
-  --bg2:      #ede8de;
+  --bg:       #f4efe6;
+  --bg2:      #ebe4d8;
   --ink:      #1a1814;
   --ink2:     #5a5650;
   --ink3:     #9a958e;
   --accent:   #2d5a3d;
-  --accent2:  #4a8c5c;
+  --accent2:  #3d7a52;
   --warm:     #c8622a;
   --warm2:    #e8a068;
   --info:     #1e4d7a;
@@ -17,25 +17,164 @@
   --radius:   12px;
   --serif:    'Fraunces', Georgia, serif;
   --sans:     'DM Sans', system-ui, sans-serif;
-  --shadow:   0 2px 16px rgba(26,24,20,0.08);
+  --shadow:   0 4px 28px rgba(26,24,20,0.07);
+  --glow:     rgba(61, 122, 82, 0.12);
 }
 
 html { scroll-behavior: smooth; }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 body {
-  background: var(--bg);
   color: var(--ink);
   font-family: var(--sans);
   font-size: 16px;
   line-height: 1.6;
   min-height: 100vh;
+  transition: background 0.25s, color 0.25s;
+}
+
+body:not(.dark) {
+  background:
+    radial-gradient(ellipse 100% 80% at 100% -10%, var(--glow), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 0% 100%, rgba(200, 98, 42, 0.08), transparent 50%),
+    linear-gradient(180deg, #faf7f1 0%, var(--bg) 40%, #ede6db 100%);
+}
+
+body.dark {
+  --bg:       #141210;
+  --bg2:      #1c1a16;
+  --ink:      #f2ebe3;
+  --ink2:     #c4bbb0;
+  --ink3:     #8a8278;
+  --accent:   #6bbd7e;
+  --accent2:  #8ed69e;
+  --warm:     #e8955c;
+  --warm2:    #f0b080;
+  --info:     #7ab8e8;
+  --border:   rgba(242,235,227,0.08);
+  --border2:  rgba(242,235,227,0.14);
+  --shadow:   0 2px 20px rgba(0,0,0,0.35);
+  background: var(--bg);
+}
+
+body.dark .form-card,
+body.dark .action-card {
+  background: var(--bg2);
+  border-color: var(--border2);
+}
+
+body.dark .badge-do    { background: rgba(107,189,126,0.15); color: #9ee0ad; }
+body.dark .badge-contact { background: rgba(122,184,232,0.12); color: #a8d4f5; }
+body.dark .badge-learn { background: rgba(232,149,92,0.12); color: #f0c090; }
+
+body.dark input[type="text"] {
+  background: var(--bg2);
+  color: var(--ink);
+  border-color: var(--border2);
+}
+
+body.dark input[type="text"]::placeholder {
+  color: var(--ink3);
+}
+
+body.dark .subtitle,
+body.dark label {
+  color: var(--ink2);
+}
+
+body.dark .tag:not(.selected) {
+  color: var(--ink2);
+  border-color: var(--border2);
+}
+
+body.dark .time-btn:not(.selected) {
+  color: var(--ink2);
+  border-color: var(--border2);
+}
+
+body.dark .back-btn:hover {
+  color: var(--ink);
+}
+
+body.dark .form-note {
+  color: var(--ink3);
+}
+
+body.dark #results-screen h2 {
+  color: var(--ink);
+}
+
+body.dark .results-sub {
+  color: var(--ink3);
+}
+
+body.dark .card-title {
+  color: var(--ink);
+}
+
+body.dark .card-desc {
+  color: var(--ink2);
+}
+
+body.dark .results-footer p {
+  color: var(--ink3);
+}
+
+body.dark .error-inner h2 {
+  color: var(--ink);
+}
+
+body.dark .error-inner p {
+  color: var(--ink2);
+}
+
+/* ── TOP TOOLBAR ─────────────────────────────────────── */
+.app-toolbar {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 50;
+  display: flex;
+  gap: 6px;
+}
+
+.toolbar-btn {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 100px;
+  border: 1px solid var(--border2);
+  background: rgba(255,255,255,0.88);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+body.dark .toolbar-btn {
+  background: rgba(28,26,22,0.92);
+  color: var(--ink);
+}
+
+.toolbar-btn:hover {
+  border-color: var(--accent);
 }
 
 /* ── SCREENS ──────────────────────────────────────────── */
 .screen {
   display: none;
   min-height: 100vh;
-  padding: 2rem 1.25rem 4rem;
+  padding: 3.5rem 1.25rem 4rem;
   max-width: 680px;
   margin: 0 auto;
 }
@@ -79,17 +218,22 @@ h1 em {
   line-height: 1.7;
 }
 
-/* ── FORM CARD ────────────────────────────────────────── */
+/* ── FORM CARD (light: gradient + green stripe) ───────── */
 .form-card {
-  background: white;
+  background: linear-gradient(145deg, #ffffff 0%, #faf8f4 100%);
   border: 1px solid var(--border);
+  border-left: 4px solid var(--accent2);
   border-radius: 16px;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,0.6) inset;
   animation: fadeUp 0.6s 0.1s ease both;
+}
+
+body.dark .form-card {
+  border-left-color: var(--accent2);
 }
 
 .field { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -208,6 +352,7 @@ input[type="text"]::placeholder { color: var(--ink3); }
   color: var(--ink3);
   text-align: center;
   margin-top: -0.5rem;
+  line-height: 1.55;
 }
 
 /* ── LOADING ──────────────────────────────────────────── */
@@ -278,6 +423,37 @@ input[type="text"]::placeholder { color: var(--ink3); }
   color: var(--ink3);
 }
 
+.trust-line {
+  font-size: 0.84rem;
+  color: var(--ink2);
+  background: rgba(30, 77, 122, 0.06);
+  border: 1px solid rgba(30, 77, 122, 0.15);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.55;
+}
+
+.trust-line__link {
+  color: var(--info);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.trust-line__link:hover {
+  text-decoration: underline;
+}
+
+body.dark .trust-line {
+  background: rgba(122, 184, 232, 0.08);
+  border-color: rgba(122, 184, 232, 0.22);
+  color: var(--ink2);
+}
+
+body.dark .trust-line__link {
+  color: var(--info);
+}
+
 /* ── ACTION CARDS ─────────────────────────────────────── */
 .cards-grid {
   display: flex;
@@ -294,9 +470,19 @@ input[type="text"]::placeholder { color: var(--ink3); }
   box-shadow: var(--shadow);
   transition: transform 0.2s, box-shadow 0.2s;
 }
+
+body:not(.dark) .action-card {
+  background: linear-gradient(160deg, #ffffff 0%, #faf9f6 100%);
+  box-shadow: 0 4px 24px rgba(26,24,20,0.06), 0 0 0 1px rgba(255,255,255,0.75) inset;
+}
+
 .action-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(26,24,20,0.1);
+}
+
+body.dark .action-card:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.35);
 }
 
 .card-top {

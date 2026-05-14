@@ -9,6 +9,10 @@
 </head>
 <body>
 
+  <div class="app-toolbar" role="toolbar" aria-label="Display">
+    <button type="button" id="dark-toggle" class="toolbar-btn" title="Toggle dark mode">☾</button>
+  </div>
+
   <!-- FORM SCREEN -->
   <main id="form-screen" class="screen active">
     <div class="hero">
@@ -65,7 +69,7 @@
         Show me what I can do
         <span class="btn-arrow">→</span>
       </button>
-      <p class="form-note">wip.</p>
+      <p class="form-note">Links are verified when possible. </p>
     </div>
   </main>
 
@@ -78,12 +82,13 @@
   </main>
 
   <!-- RESULTS SCREEN -->
-  <main id="results-screen" class="screen">
+  <main id="results-screen" class="screen" aria-live="polite">
     <div class="results-header">
       <button class="back-btn" id="back-btn">← Start over</button>
       <h2>Here's what you can do</h2>
       <p class="results-sub" id="results-context"></p>
     </div>
+    <div class="trust-line" id="trusted-line" role="region" aria-label="Trusted resource for this topic" aria-live="polite"></div>
     <div class="cards-grid" id="cards-grid"></div>
     <div class="results-footer">
       <p>Not what you were looking for?</p>
@@ -96,7 +101,7 @@
     <div class="error-inner">
       <p class="error-icon">⚠</p>
       <h2>Something went wrong</h2>
-      <p id="error-msg">We couldn't get results. Check your connection and try again.</p>
+      <p id="error-msg">Couldn't get results. Check your connection and try again.</p>
       <button class="submit-btn" id="error-back-btn">Try again</button>
     </div>
   </main>
