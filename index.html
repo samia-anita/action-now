@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Action Now — Find what you can do today</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,6 +29,63 @@
     }
 
     html { scroll-behavior: smooth; }
+
+    /* ── SITE NAV ──────────────────────────────────────── */
+    .site-nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+    }
+
+    .site-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 34px; height: 34px;
+      flex-shrink: 0;
+    }
+
+    .logo-wordmark {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.92);
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
+    .logo-wordmark em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.5rem 1.25rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+    }
+    .nav-cta:hover {
+      background: rgba(255,255,255,0.18);
+      color: white;
+    }
 
     body {
       background: var(--navy);
@@ -56,25 +114,38 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
+      z-index: 0;
+    }
+
+    .hero-img-fallback {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
     }
 
     .hero-overlay {
       position: absolute;
       inset: 0;
+      z-index: 1;
       background:
         linear-gradient(
           to bottom,
-          rgba(13,17,23,0.3)  0%,
-          rgba(13,17,23,0.15) 30%,
-          rgba(13,17,23,0.6)  65%,
-          rgba(13,17,23,0.92) 100%
+          rgba(13,17,23,0.35)  0%,
+          rgba(13,17,23,0.2) 30%,
+          rgba(13,17,23,0.65)  65%,
+          rgba(13,17,23,0.95) 100%
         );
     }
 
     .hero-vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, transparent 50%, rgba(13,17,23,0.5) 100%);
+      z-index: 1;
+      background: radial-gradient(ellipse at center, transparent 50%, rgba(13,17,23,0.55) 100%);
     }
 
     .hero-content {
@@ -287,6 +358,124 @@
       line-height: 1.7;
     }
 
+    /* ── CAUSE PHOTO GRID ──────────────────────────────── */
+    .cause-grid-section {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .cause-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 220px 220px;
+    }
+
+    .cause-photo {
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    .cause-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      display: block;
+    }
+
+    .cause-photo:hover img { transform: scale(1.07); }
+
+    .cause-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,17,23,0.82) 0%, rgba(13,17,23,0.1) 60%);
+      transition: background 0.3s;
+    }
+
+    .cause-photo:hover .cause-photo-overlay {
+      background: linear-gradient(to top, rgba(13,17,23,0.72) 0%, rgba(76,175,130,0.12) 100%);
+    }
+
+    .cause-label {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.9);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cause-label .cause-icon { font-size: 1rem; }
+
+    /* ── COMMUNITY BANNER ──────────────────────────────── */
+    .community-banner {
+      position: relative;
+      margin-top: 3.5rem;
+      height: 480px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    .community-banner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+
+    .community-banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(13,17,23,0.9) 0%,
+        rgba(13,17,23,0.7) 45%,
+        rgba(13,17,23,0.2) 100%
+      );
+    }
+
+    .community-banner-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 2.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 3rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-number {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300;
+      color: var(--green);
+      line-height: 1;
+      display: block;
+    }
+    .stat-desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--white2);
+      margin-top: 0.4rem;
+      max-width: 160px;
+      line-height: 1.5;
+    }
+
     /* ── ISSUES ────────────────────────────────────────── */
     .issues-grid {
       display: flex;
@@ -331,11 +520,28 @@
       background: var(--navy3);
       border: 1px solid var(--border2);
       border-radius: 14px;
-      padding: 1.5rem;
+      overflow: hidden;
       transition: all 0.25s;
       position: relative;
-      overflow: hidden;
     }
+
+    .sample-card-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85);
+      transition: filter 0.3s, transform 0.4s;
+    }
+    .sample-card:hover .sample-card-img {
+      filter: brightness(0.95);
+      transform: scale(1.03);
+    }
+
+    .sample-card-body {
+      padding: 1.25rem 1.5rem 1.5rem;
+    }
+
     .sample-card::before {
       content: '';
       position: absolute;
@@ -343,6 +549,7 @@
       height: 2px;
       opacity: 0;
       transition: opacity 0.25s;
+      z-index: 1;
     }
     .sc-green::before { background: var(--green); }
     .sc-teal::before  { background: var(--teal); }
@@ -357,7 +564,7 @@
       font-size: 0.7rem;
       font-weight: 500;
       letter-spacing: 0.05em;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
     .sb-green { background: rgba(76,175,130,0.15); color: #6ddfa8; }
     .sb-teal  { background: rgba(91,196,184,0.15); color: #7fe0d8; }
@@ -413,22 +620,47 @@
 
     /* ── FINAL CTA ─────────────────────────────────────── */
     .final-cta {
-      text-align: center;
-      padding: 7rem 2.5rem;
       position: relative;
       overflow: hidden;
     }
-    .final-cta::before {
-      content: '';
+
+    .final-cta-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 60%;
+      filter: brightness(0.3) saturate(0.7);
+    }
+
+    .final-cta-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(13,17,23,0.6) 0%,
+        rgba(13,17,23,0.75) 100%
+      );
+    }
+
+    .final-cta-glow {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(76,175,130,0.06) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(76,175,130,0.12) 0%, transparent 70%);
       pointer-events: none;
     }
 
-    .final-inner { max-width: 560px; margin: 0 auto; position: relative; }
+    .final-inner {
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 7rem 2.5rem;
+    }
     .final-cta h2 { font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 1rem; }
     .final-cta p { color: var(--muted); font-weight: 300; margin-bottom: 2.5rem; }
 
@@ -494,23 +726,52 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    @media (max-width: 768px) {
+      .cause-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 160px);
+      }
+      .community-banner { height: 380px; }
+      .stat-row { gap: 2rem; }
+    }
+
     @media (max-width: 640px) {
       .hero-content { padding: 0 1.5rem 4rem; }
       .section-wrap { padding: 4rem 1.5rem; }
       .steps { grid-template-columns: 1fr; }
       .diff-grid { grid-template-columns: 1fr; }
-      .final-cta { padding: 5rem 1.5rem; }
+      .final-inner { padding: 5rem 1.5rem; }
       footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
       .scroll-hint { display: none; }
+      .community-banner { height: 320px; }
+      .stat-row { flex-direction: column; gap: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
+  <nav class="site-nav">
+    <a href="/" class="site-logo">
+      <svg class="logo-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+        <rect width="64" height="64" rx="16" fill="#2d5a3d"/>
+        <path d="M16 46 C14 28, 32 14, 42 18 C38 34, 24 48, 16 46Z" fill="white" opacity="0.95"/>
+        <path d="M16 46 C18 38, 22 32, 28 26" stroke="white" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.85"/>
+        <circle cx="43" cy="18" r="3" fill="#7dda9a"/>
+      </svg>
+      <span class="logo-wordmark">Action <em>Now</em></span>
+    </a>
+    <a href="/app.html" class="nav-cta">Find my actions →</a>
+  </nav>
+
   <div class="hero">
     <video class="hero-bg" autoplay muted loop playsinline>
       <source src="backgrounds/bg.mp4" type="video/mp4" />
     </video>
+    <img
+      class="hero-img-fallback"
+      src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1920&q=80"
+      alt="Community gathering"
+    />
     <div class="hero-overlay"></div>
     <div class="hero-vignette"></div>
 
@@ -541,6 +802,76 @@
     </p>
   </div>
 
+  <!-- CAUSE PHOTO GRID -->
+  <div class="cause-grid-section reveal">
+    <div class="cause-grid">
+      <div class="cause-photo">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=80" alt="Climate & environment" loading="lazy" />
+        <div class="cause-photo-overlay"></div>
+        <span class="cause-label"><span class="cause-icon">🌱</span> Climate</span>
+      </div>
+      <div class="cause-photo">
+        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80" alt="Food insecurity" loading="lazy" />
+        <div class="cause-photo-overlay"></div>
+        <span class="cause-label"><span class="cause-icon">🥗</span> Food</span>
+      </div>
+      <div class="cause-photo">
+        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=600&q=80" alt="Housing & homelessness" loading="lazy" />
+        <div class="cause-photo-overlay"></div>
+        <span class="cause-label"><span class="cause-icon">🏠</span> Housing</span>
+      </div>
+      <div class="cause-photo">
+        <img src="https://images.unsplash.com/photo-1591462236264-c5be58034a45?auto=format&fit=crop&w=600&q=80" alt="Social justice" loading="lazy" />
+        <div class="cause-photo-overlay"></div>
+        <span class="cause-label"><span class="cause-icon">✊</span> Justice</span>
+      </div>
+      <div class="cause-photo">
+        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=600&q=80" alt="Mental health" loading="lazy" />
+        <div class="cause-photo-overlay"></div>
+        <span class="cause-label"><span class="cause-icon">🧠</span> Mental health</span>
+      </div>
+      <div class="cause-photo">
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80" alt="Education access" loading="lazy" />
+        <div class="cause-photo-overlay"></div>
+        <span class="cause-label"><span class="cause-icon">📚</span> Education</span>
+      </div>
+      <div class="cause-photo">
+        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=600&q=80" alt="Gender-based violence" loading="lazy" />
+        <div class="cause-photo-overlay"></div>
+        <span class="cause-label"><span class="cause-icon">🚺</span> Gender equity</span>
+      </div>
+      <div class="cause-photo">
+        <img src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?auto=format&fit=crop&w=600&q=80" alt="Animal welfare" loading="lazy" />
+        <div class="cause-photo-overlay"></div>
+        <span class="cause-label"><span class="cause-icon">🐾</span> Animals</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMUNITY IMPACT BANNER -->
+  <div class="community-banner reveal">
+    <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1920&q=80" alt="Volunteers working together" loading="lazy" />
+    <div class="community-banner-overlay"></div>
+    <div class="community-banner-content">
+      <div class="section-label" style="margin-bottom:1rem;">The opportunity</div>
+      <h2 style="max-width:480px;">Small actions<br>create <em>big change.</em></h2>
+      <div class="stat-row">
+        <div class="stat-item">
+          <span class="stat-number">77%</span>
+          <p class="stat-desc">of people feel disconnected from causes they care about</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">3 min</span>
+          <p class="stat-desc">is all it takes to find a real local action today</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">100%</span>
+          <p class="stat-desc">free, no account needed, no agenda</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <hr class="divider" />
   <div class="section-wrap reveal">
     <div class="section-label">How it works</div>
@@ -564,22 +895,6 @@
     </div>
   </div>
 
-  <hr class="divider" />
-  <div class="section-wrap reveal">
-    <div class="section-label">What is covered so far</div>
-    <h2>Your cause<br><em>is here.</em></h2>
-    <div class="issues-grid">
-      <span class="issue-chip">🌱 Climate & environment</span>
-      <span class="issue-chip">🥗 Food insecurity</span>
-      <span class="issue-chip">🏠 Housing & homelessness</span>
-      <span class="issue-chip">🚺 Gender-based violence</span>
-      <span class="issue-chip">🧠 Mental health</span>
-      <span class="issue-chip">✊ Social justice</span>
-      <span class="issue-chip">📚 Education access</span>
-      <span class="issue-chip">🐾 Animal welfare</span>
-    </div>
-  </div>
-
   <div class="sample-section">
     <div class="section-wrap reveal">
       <div class="section-label">What you get</div>
@@ -587,22 +902,31 @@
       <p class="lead">Here's what a result looks like for someone in Toronto who cares about food insecurity and has one hour.</p>
       <div class="sample-cards">
         <div class="sample-card sc-green">
-          <span class="sample-badge sb-green">✦ Do it today</span>
-          <h4>Volunteer at the Daily Bread Food Bank</h4>
-          <p>Daily Bread has same-week volunteer slots open for sorting and distribution. No experience needed — just show up.</p>
-          <span class="sample-effort">⏱ 1 hour</span>
+          <img class="sample-card-img" src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=500&q=80" alt="Food bank volunteering" loading="lazy" />
+          <div class="sample-card-body">
+            <span class="sample-badge sb-green">✦ Do it today</span>
+            <h4>Volunteer at the Daily Bread Food Bank</h4>
+            <p>Daily Bread has same-week volunteer slots open for sorting and distribution. No experience needed — just show up.</p>
+            <span class="sample-effort">⏱ 1 hour</span>
+          </div>
         </div>
         <div class="sample-card sc-teal">
-          <span class="sample-badge sb-teal">✉ Contact someone</span>
-          <h4>Email your city councillor about the breakfast program cut</h4>
-          <p>Toronto City Council votes on school nutrition funding next week. A short email from a constituent takes 10 minutes and gets noticed.</p>
-          <span class="sample-effort">⏱ 15 min</span>
+          <img class="sample-card-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=500&q=80" alt="Community meeting" loading="lazy" />
+          <div class="sample-card-body">
+            <span class="sample-badge sb-teal">✉ Contact someone</span>
+            <h4>Email your city councillor about the breakfast program cut</h4>
+            <p>Toronto City Council votes on school nutrition funding next week. A short email takes 10 minutes and gets noticed.</p>
+            <span class="sample-effort">⏱ 15 min</span>
+          </div>
         </div>
         <div class="sample-card sc-gold">
-          <span class="sample-badge sb-gold">◎ Learn something</span>
-          <h4>Understand how food banks are actually funded</h4>
-          <p>Most people don't know 60% of food bank supply comes from food drives, not government. This explains where the real gaps are.</p>
-          <span class="sample-effort">⏱ 10 min read</span>
+          <img class="sample-card-img" src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=500&q=80" alt="Learning and reading" loading="lazy" />
+          <div class="sample-card-body">
+            <span class="sample-badge sb-gold">◎ Learn something</span>
+            <h4>Understand how food banks are actually funded</h4>
+            <p>Most people don't know 60% of food bank supply comes from food drives, not government. This explains where the real gaps are.</p>
+            <span class="sample-effort">⏱ 10 min read</span>
+          </div>
         </div>
       </div>
     </div>
@@ -639,7 +963,11 @@
   </div>
 
   <hr class="divider" />
+
   <div class="final-cta reveal">
+    <img class="final-cta-bg" src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1920&q=80" alt="" aria-hidden="true" loading="lazy" />
+    <div class="final-cta-overlay"></div>
+    <div class="final-cta-glow"></div>
     <div class="final-inner">
       <h2><em>Ready to do something?</em></h2>
       <p>It takes less than a minute to find your next action.</p>
@@ -650,7 +978,6 @@
   <footer>
     <span class="footer-name">Action Now</span>
     <div class="footer-links">
-      <a href="app.html">Launch app</a>
       <a href="https://github.com/samia-anita/action-now" target="_blank">GitHub</a>
     </div>
     <span class="footer-badge">Built for Girls in STEM Hackathon 2026</span>
@@ -658,7 +985,14 @@
 
   <script>
     const video = document.querySelector('.hero-bg');
-    if (video) video.playbackRate = 0.6;
+    if (video) {
+      video.style.zIndex = '0';
+      video.playbackRate = 0.6;
+      video.addEventListener('playing', () => {
+        const fallback = document.querySelector('.hero-img-fallback');
+        if (fallback) fallback.style.opacity = '0';
+      });
+    }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
@@ -667,7 +1001,7 @@
           observer.unobserve(e.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   </script>
