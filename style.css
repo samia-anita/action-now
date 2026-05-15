@@ -187,9 +187,9 @@ html { overflow-x: hidden; }
 .hero-bg-image {
   position: absolute;
   inset: 0;
-  background-image: url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1600&q=80');
+  background-image: url('https://images.unsplash.com/photo-1668473694097-acb8b767c2ff?auto=format&fit=crop&w=1600&q=80');
   background-size: cover;
-  background-position: center 40%;
+  background-position: center 60%;
   transform: scale(1.03);
   transition: transform 8s ease;
 }
