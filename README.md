@@ -1,6 +1,6 @@
 # Action Now
 
-Turn concern into action. Tell it where you are, what you care about, and how much time you have — Action Now uses AI to surface 3 specific, local, real things you can do today. Built for the Girls in STEM Hackathon 2026.
+Turn concern into action. Tell it where you are, what you care about, and how much time you have — Action Now uses AI to surface 3 specific, local, real things you can do today.
 
 ![Node](https://img.shields.io/badge/Node.js-Express-green)
 ![Groq](https://img.shields.io/badge/LLM-Groq%20Llama%203.3-blueviolet)
