@@ -735,3 +735,140 @@ body.dark .action-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.35); }
   .cards-grid, .trust-line, .results-footer { padding-left: 1rem; padding-right: 1rem; margin-left: 0; margin-right: 0; }
   .results-header { padding: 2rem 1rem 1rem; }
 }
+
+/* ══════════════════════════════════════════════
+   v2 ADDITIONS: share bar, feedback, accessibility,
+   issue limit message, multi-issue support
+   ══════════════════════════════════════════════ */
+
+/* ── SHARE BAR ─────────────────────────────── */
+.share-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  margin: 1.5rem auto;
+  max-width: 680px;
+  width: 90%;
+}
+
+.share-label, .feedback-label {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.45rem 1rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  font-family: var(--sans, system-ui);
+  font-size: 0.82rem;
+  color: var(--white2, #c8d4e0);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.share-btn:hover {
+  background: rgba(255,255,255,0.13);
+  border-color: rgba(255,255,255,0.25);
+}
+
+.share-btn:focus-visible {
+  outline: 2px solid var(--green, #4caf82);
+  outline-offset: 2px;
+}
+
+.share-confirm {
+  font-size: 0.8rem;
+  color: var(--green, #4caf82);
+  min-width: 80px;
+}
+
+/* ── FEEDBACK BAR ──────────────────────────── */
+.feedback-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  max-width: 680px;
+  width: 90%;
+  margin: 0 auto 1rem;
+}
+
+.feedback-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.4rem 0.9rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border, rgba(255,255,255,0.07));
+  border-radius: 100px;
+  font-family: var(--sans, system-ui);
+  font-size: 0.85rem;
+  color: var(--white2, #c8d4e0);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.feedback-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.11);
+}
+
+.feedback-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.feedback-btn:focus-visible {
+  outline: 2px solid var(--green, #4caf82);
+  outline-offset: 2px;
+}
+
+/* ── ISSUE LIMIT MESSAGE ───────────────────── */
+.field-hint {
+  font-size: 0.78rem;
+  color: var(--teal, #5bc4b8);
+  margin-top: 0.5rem;
+  padding: 0 0.25rem;
+}
+
+/* ── FOCUS VISIBILITY (accessibility) ──────── */
+.tag:focus-visible,
+.time-btn:focus-visible,
+.submit-btn:focus-visible,
+.back-btn:focus-visible,
+.secondary-btn:focus-visible,
+.toolbar-btn:focus-visible {
+  outline: 2px solid var(--green, #4caf82);
+  outline-offset: 2px;
+}
+
+/* ── TAG ARIA PRESSED STATE ─────────────────── */
+.tag[aria-pressed="true"] {
+  /* Same as .selected — belt-and-suspenders */
+  background: rgba(76,175,130,0.18);
+  border-color: var(--green, #4caf82);
+  color: #7dda9a;
+}
+
+/* ── REDUCED MOTION ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .action-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .loading-text {
+    transition: none !important;
+  }
+}

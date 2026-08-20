@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Action Now — Find what you can do today</title>
+  <meta name="description" content="Discover local, personalized civic actions for issues you care about." />
+  <link rel="icon" href="backgrounds/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Reduced motion support -->
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip-to-main link for keyboard/screen-reader users -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="app-toolbar" role="toolbar" aria-label="App controls">
+    <a href="/" class="toolbar-btn toolbar-home" aria-label="Back to home page">← Home</a>
+    <button type="button" id="dark-toggle" class="toolbar-btn" aria-label="Toggle dark mode" aria-pressed="false">☾</button>
+  </div>
+
+  <!-- ════════════════ FORM SCREEN ════════════════ -->
+  <main id="main-content">
+    <section id="form-screen" class="screen active" aria-label="Find your actions">
+      <div class="hero">
+        <div class="hero-bg-image" aria-hidden="true"></div>
+        <div class="hero-text">
+          <a href="/" class="eyebrow eyebrow-logo" aria-label="Action Now home">
+            <svg class="logo-mark-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="18" height="18" aria-hidden="true" focusable="false">
+              <rect width="64" height="64" rx="16" fill="white" fill-opacity="0.18"/>
+              <path d="M16 46 C14 28, 32 14, 42 18 C38 34, 24 48, 16 46Z" fill="white" opacity="0.95"/>
+              <path d="M16 46 C18 38, 22 32, 28 26" stroke="white" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.85"/>
+              <circle cx="43" cy="18" r="3" fill="#7dda9a"/>
+            </svg>
+            Action Now
+          </a>
+          <h1>What can I do<br><em>right now?</em></h1>
+          <p class="subtitle">Tell us where you are and what you care about. There are real opportunities you can take today.</p>
+        </div>
+      </div>
+
+      <div class="form-card" role="form" aria-label="Find local actions">
+
+        <!-- Location -->
+        <div class="field">
+          <div class="field-header">
+            <span class="field-icon" aria-hidden="true">📍</span>
+            <label for="location">Where are you?</label>
+          </div>
+          <div class="input-wrap">
+            <input
+              type="text"
+              id="location"
+              placeholder="e.g. Toronto, ON or Chicago, IL"
+              autocomplete="off"
+              aria-required="true"
+              aria-describedby="location-hint"
+            />
+            <span id="location-hint" class="sr-only">Enter your city or region to find local opportunities</span>
+          </div>
+        </div>
+
+        <!-- Issue (multi-select with visual indicator) -->
+        <div class="field">
+          <div class="field-header">
+            <span class="field-icon" aria-hidden="true">🌍</span>
+            <label id="issue-label">What issues do you care about? <span class="label-hint">(pick up to 3)</span></label>
+          </div>
+          <div
+            class="tag-group"
+            id="issue-tags"
+            role="group"
+            aria-labelledby="issue-label"
+            aria-required="true"
+          >
+            <button class="tag" data-value="climate & environment" aria-pressed="false">🌱 Climate &amp; environment</button>
+            <button class="tag" data-value="food insecurity" aria-pressed="false">🥗 Food insecurity</button>
+            <button class="tag" data-value="housing & homelessness" aria-pressed="false">🏠 Housing &amp; homelessness</button>
+            <button class="tag" data-value="mental health" aria-pressed="false">🧠 Mental health</button>
+            <button class="tag" data-value="gender-based violence" aria-pressed="false">🚺 Gender-based violence</button>
+            <button class="tag" data-value="social justice" aria-pressed="false">✊ Social justice</button>
+            <button class="tag" data-value="education access" aria-pressed="false">📚 Education access</button>
+            <button class="tag" data-value="animal welfare" aria-pressed="false">🐾 Animal welfare</button>
+          </div>
+          <p id="issue-limit-msg" class="field-hint" aria-live="polite" style="display:none;">
+            Maximum 3 issues selected. Deselect one to change your picks.
+          </p>
+        </div>
+
+        <!-- Skills -->
+        <div class="field">
+          <div class="field-header">
+            <span class="field-icon" aria-hidden="true">✨</span>
+            <label id="skill-label">What can you offer? <span class="label-hint">(pick any)</span></label>
+          </div>
+          <div class="tag-group" id="skill-tags" role="group" aria-labelledby="skill-label">
+            <button class="tag" data-value="I can drive" aria-pressed="false">🚗 Can drive</button>
+            <button class="tag" data-value="I can write or design" aria-pressed="false">✍️ Write / design</button>
+            <button class="tag" data-value="I speak another language" aria-pressed="false">🌍 Speak another language</button>
+            <button class="tag" data-value="I can code" aria-pressed="false">💻 Can code</button>
+            <button class="tag" data-value="I can cook or bake" aria-pressed="false">🍳 Cook / bake</button>
+            <button class="tag" data-value="I can do physical labour" aria-pressed="false">💪 Physical labour</button>
+            <button class="tag" data-value="I can listen and support people" aria-pressed="false">🤝 Listen &amp; support</button>
+            <button class="tag" data-value="I have no specific skills but I want to help" aria-pressed="false">⭐ Just want to help</button>
+          </div>
+        </div>
+
+        <!-- Time -->
+        <div class="field">
+          <div class="field-header">
+            <span class="field-icon" aria-hidden="true">⏱</span>
+            <label id="time-label">How much time do you have?</label>
+          </div>
+          <div class="time-group" id="time-buttons" role="group" aria-labelledby="time-label" aria-required="true">
+            <button class="time-btn" data-value="15 minutes" aria-pressed="false">
+              <span class="time-label">⚡ 15 minutes</span>
+              <span class="time-hint">Quick action, right now</span>
+            </button>
+            <button class="time-btn" data-value="about 1 hour" aria-pressed="false">
+              <span class="time-label">🕐 About 1 hour</span>
+              <span class="time-hint">Focused &amp; meaningful</span>
+            </button>
+            <button class="time-btn" data-value="a few hours this weekend" aria-pressed="false">
+              <span class="time-label">📅 This weekend</span>
+              <span class="time-hint">A few hours to spare</span>
+            </button>
+            <button class="time-btn" data-value="ongoing commitment" aria-pressed="false">
+              <span class="time-label">🔄 Ongoing</span>
+              <span class="time-hint">Regular commitment</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-area">
+          <button id="submit-btn" class="submit-btn" disabled aria-disabled="true">
+            Show me what I can do
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="form-note">Links are verified. No account required.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ LOADING SCREEN ════════════════ -->
+    <section id="loading-screen" class="screen" aria-label="Loading" aria-live="polite">
+      <div class="loading-inner">
+        <div class="spinner" role="status" aria-label="Finding opportunities..."></div>
+        <p class="loading-text" id="loading-text">Searching for opportunities near you...</p>
+      </div>
+    </section>
+
+    <!-- ════════════════ RESULTS SCREEN ════════════════ -->
+    <section id="results-screen" class="screen" aria-label="Your action recommendations" aria-live="polite">
+      <div class="results-header">
+        <button class="back-btn" id="back-btn" aria-label="Return to form">← Start over</button>
+        <h2>Here's what you can do</h2>
+        <p class="results-sub" id="results-context" aria-live="polite"></p>
+      </div>
+
+      <div class="trust-line" id="trusted-line" role="region" aria-label="Trusted resource for this topic"></div>
+
+      <div class="cards-grid" id="cards-grid" role="list" aria-label="Action recommendations"></div>
+
+      <!-- Share panel -->
+      <div class="share-bar" id="share-bar" aria-label="Share your results">
+        <span class="share-label">Share these actions:</span>
+        <button class="share-btn" id="copy-link-btn" aria-label="Copy shareable link to clipboard">
+          🔗 Copy link
+        </button>
+        <button class="share-btn" id="copy-text-btn" aria-label="Copy results as text">
+          📋 Copy text
+        </button>
+        <span id="share-confirm" class="share-confirm" role="status" aria-live="polite"></span>
+      </div>
+
+      <!-- Feedback panel -->
+      <div class="feedback-bar" id="feedback-bar" aria-label="Rate these recommendations">
+        <span class="feedback-label">Were these helpful?</span>
+        <button class="feedback-btn" id="feedback-yes" aria-label="Yes, these were helpful" data-value="helpful">
+          👍 Helpful
+        </button>
+        <button class="feedback-btn" id="feedback-no" aria-label="No, these were not helpful" data-value="not_helpful">
+          👎 Not helpful
+        </button>
+        <span id="feedback-confirm" class="share-confirm" role="status" aria-live="polite"></span>
+      </div>
+
+      <div class="results-footer">
+        <p>Not what you were looking for?</p>
+        <button class="secondary-btn" id="retry-btn">Try different options</button>
+      </div>
+    </section>
+
+    <!-- ════════════════ ERROR SCREEN ════════════════ -->
+    <section id="error-screen" class="screen" aria-label="Error" aria-live="assertive">
+      <div class="error-inner">
+        <p class="error-icon" aria-hidden="true">⚠</p>
+        <h2>Something went wrong</h2>
+        <p id="error-msg">Couldn't get results. Check your connection and try again.</p>
+        <button class="submit-btn" id="error-back-btn">Try again</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

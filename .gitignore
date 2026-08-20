@@ -1,3 +1,28 @@
-.env
+# Dependencies
 node_modules/
+
+# Environment — never commit secrets
+.env
+.env.local
+.env.production
+.env.*.local
+
+# macOS
 .DS_Store
+
+# Logs
+*.log
+logs/
+
+# Test coverage
+coverage/
+
+# Build artifacts
+dist/
+build/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
