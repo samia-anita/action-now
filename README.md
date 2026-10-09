@@ -2,7 +2,7 @@
 
 > An AI-powered civic action recommender — transforms concern into local, actionable steps in under a minute.
 
-**[Live Demo](https://action-now.up.railway.app)** · [GitHub](https://github.com/samia-anita/action-now)
+[GitHub](https://github.com/samia-anita/action-now)
 
 ---
 
